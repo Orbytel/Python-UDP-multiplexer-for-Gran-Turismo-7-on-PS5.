@@ -45,8 +45,9 @@ PS5 (GT7)
 This application acts purely as a UDP splitter / forwarder. It forwards GT7 telemetry packets unchanged.
 
 This is different from SimHub’s UDP forwarder, which modifies the telemetry payload before re-broadcasting it. That modification can break applications that expect the original GT7 packet structure, such as GT7 Proxy, resulting in errors like:
+```cmd
 Exception: unpack requires a buffer of 316 bytes 
-
+```
 By forwarding the packets unchanged, it prevents those issues from occurring. 
 
 ---
