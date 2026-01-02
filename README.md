@@ -1,21 +1,19 @@
-# Python-UDP-multiplexer-for-Gran-Turismo-7-on-PS5.
-Receives telemetry broadcasts from PS5 GT7 and forwards them to multiple local applications (SimTools, SimHub, etc.), enabling motion platforms and dashboards to work simultaneously.
-
-# 🎮 GT7 UDP Multiplexer  
+# GT7 UDP Multiplexer  
 **Gran Turismo 7 (PS5) Telemetry Splitter for SimTools, SimHub & GT7 Proxy**
+Receives telemetry broadcasts from PS5 GT7 and forwards them to multiple local applications (SimTools, SimHub, etc.), enabling multiple simulation applications requiring udp streams from GT7 to work simultaneously.
 
 ## 📌 What is this?
 
-**GT7 UDP Multiplexer** is a small, dependency-free Python script that allows **Gran Turismo 7 on PS5** to send telemetry data to **multiple PC applications at the same time**.
+**GT7 UDP Multiplexer** is a small, dependency-free Python script that allows **Gran Turismo 7 on PS5** to send telemetry data to **multiple PC applications on the same pc at the same time**.
 
-Normally, GT7 telemetry can only be received by **one application per UDP port**, which causes conflicts when using:
+Normally, GT7 telemetry can only be received by **one application per UDP port**, which causes conflicts when using applications such as:
 
 - SimTools using GT7 Proxy
 - SimHub (dashboards, bass shakers, LEDs)
 
 This script solves that by acting as a **UDP middleman**.
 
-With this script you can havr multiple applications receiving UDP telemetry data at the same time. 
+With this script you can have multiple applications receiving UDP telemetry data at the same time. 
 
 ---
 
@@ -23,7 +21,7 @@ With this script you can havr multiple applications receiving UDP telemetry data
 
 1. **GT7 on PS5 broadcasts telemetry** over UDP (port `33740`)
 2. This script listens on that port
-3. Every telemetry packet is **copied and re-sent**
+3. Every telemetry packet is **copied and re-sent** to multiple predefined UDP ports on the local machine
 4. Each application listens on its **own UDP port**
 5. No conflicts, no data loss
 
@@ -32,9 +30,8 @@ PS5 (GT7)
    │  UDP 33740
    ▼
 [ GT7 UDP Multiplexer ]
-   ├── SimTools (33740)
    ├── SimHub  (20777)
-   └── GT7 Proxy (20888)
+   └── GT7 Proxy (20888)> SimTools
 ```
 
 ---
@@ -43,10 +40,14 @@ PS5 (GT7)
 
 - Does NOT modify telemetry data  
 - Does NOT decode GT7 packets  
-- Does NOT replace SimHub or SimTools  
-- Does NOT require PS5 configuration  
+- Does NOT replace SimHub or SimTools   
 
-It is **only a UDP splitter / forwarder**.
+This application acts purely as a UDP splitter / forwarder. It forwards GT7 telemetry packets unchanged.
+
+This is different from SimHub’s UDP forwarder, which modifies the telemetry payload before re-broadcasting it. That modification can break applications that expect the original GT7 packet structure, such as GT7 Proxy, resulting in errors like:
+Exception: unpack requires a buffer of 316 bytes 
+
+By forwarding the packets unchanged, it prevents those issues from occurring. 
 
 ---
 
@@ -54,10 +55,10 @@ It is **only a UDP splitter / forwarder**.
 
 - Windows 10 / 11  
 - Python **3.9+**
-- PS5 & PC on the **same LAN**
+- PS5 & PC on the **same LAN** (preferably wired to reduce latency)
 - GT7 running on PS5
 - One or more of:
-  - SimTools v3 (XSim)
+  - SimTools v3 (XSim) 
   - SimHub v9+
   - GT7 Proxy (Python)
 
@@ -162,7 +163,6 @@ Typical setup:
 
 | Software | Port |
 |--------|------|
-| SimTools / XSim | 33740 |
 | SimHub | 20777 |
 | GT7 Proxy | 20888 |
 
@@ -171,9 +171,10 @@ Typical setup:
 ---
 
 ### PS5 IP Filtering (Recommended)
+This should be set to the same IP as you4 PS5. It is recommended to set your PS5's IP as a static IP address either on your PS5 or as a reserved address in your modem/router. 
 
 ```python
-PS5_IP = "192.168.0.153"
+PS5_IP = "192.168.0.153" 
 ```
 
 Disable filtering:
@@ -198,7 +199,6 @@ Leave the window open.
 
 ### SimTools
 - GT7 plugin enabled
-- Listening on UDP **33740**
 
 ### SimHub
 - Game: GT7
@@ -209,7 +209,11 @@ Leave the window open.
 ### GT7 Proxy (optional)
 - Use port **20888**
 - Do NOT bind directly to 33740
+- Run the exe using the following command (changint the ps5-ip to the IP address of your PS5):
+```cmd
+gt7proxy.exe --listen-port 20888 --ps5-ip 192.168.0.153
 
+```
 ---
 
 ## Known behavior & quirks
