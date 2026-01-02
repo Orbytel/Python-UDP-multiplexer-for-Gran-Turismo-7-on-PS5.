@@ -1,11 +1,12 @@
 <img width="861" height="525" alt="Gt7udpmulti" src="https://github.com/user-attachments/assets/f6a729d8-fdbf-4cfb-a688-097f93dccbca" />
 <br>
 <br>
-##GT7 UDP Multiplexer  
+
+## GT7 UDP Multiplexer  
 **Gran Turismo 7 (PS5) Telemetry Splitter for SimTools, SimHub & GT7 Proxy**
 Receives telemetry broadcasts from PS5 GT7 and forwards them to multiple local applications (SimTools, SimHub, etc.), enabling multiple simulation applications requiring udp streams from GT7 to work simultaneously.
 
-## 📌 What is this?
+## What is this?
 
 **GT7 UDP Multiplexer** is a small, dependency-free Python script that allows **Gran Turismo 7 on PS5** to send telemetry data to **multiple PC applications on the same pc at the same time**. A hardened executable (*.exe) version is currently in the works, along with the ability to add additional applications and modify IP addresses and port numbers via a config file. 
 
