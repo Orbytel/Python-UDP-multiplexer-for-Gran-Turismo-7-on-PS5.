@@ -209,7 +209,7 @@ python gt7_multiplexer.py
 ```
 Note: you will need to either navigate to the directory where the gt7_multiplexer.py is located first, or include the full path in the command (i.e. python c:\gt7multiplexer\gt7_multiplexer.py)
 
-Once the script is running, you may receive a pop-up from Windows Firewall requesting authorisation for the script. Click Allow to continue. 
+Once the script is running, you may receive a Windows Firewall pop-up requesting authorisation for the script. Click Allow to continue. 
 
 Leave the window open.
 
