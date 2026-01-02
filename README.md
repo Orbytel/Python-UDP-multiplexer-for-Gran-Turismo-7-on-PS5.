@@ -53,7 +53,6 @@ By forwarding the packets unchanged, it prevents those issues from occurring.
 
 ## Requirements
 
-- Windows 10 / 11  
 - Python **3.9+**
 - PS5 & PC on the **same LAN** (preferably wired to reduce latency)
 - GT7 running on PS5
@@ -102,9 +101,9 @@ GT7_LISTEN_PORT = 33740
 
 # Destinations to forward telemetry to
 DESTINATIONS = [
-    ("127.0.0.1", 33740),  # SimTools / XSim
     ("127.0.0.1", 20777),  # SimHub
-    # ("127.0.0.1", 20888),  # GT7 Proxy (optional)
+    ("127.0.0.1", 20888),  # GT7 Proxy
+    #add others here
 ]
 
 # Optional: filter only your PS5 IP
@@ -199,17 +198,17 @@ Leave the window open.
 
 ### SimTools
 - GT7 plugin enabled
-
+  
 ### SimHub
 - Game: GT7
 - UDP port: **20777**
 - Live mode enabled
 - Telemetry forwarding disabled
 
-### GT7 Proxy (optional)
+### GT7 Proxy
 - Use port **20888**
 - Do NOT bind directly to 33740
-- Run the exe using the following command (changint the ps5-ip to the IP address of your PS5):
+- Run the exe using the following command (changing the ps5-ip to the IP address of your PS5):
 ```cmd
 gt7proxy.exe --listen-port 20888 --ps5-ip 192.168.0.153
 
